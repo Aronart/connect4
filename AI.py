@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from numpy import numpy as np
+import numpy as np
 
 
 class AI(metaclass=ABCMeta):

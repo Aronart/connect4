@@ -11,7 +11,7 @@ class Game:
         rows_count = 6
         cols_count = 7
         # game board, contains 0, 1, or 2 entries
-        self.board = np.array("i", [[0 for x in range(cols_count)] for x in range(rows_count)])
+        self.board = np.array([[0 for x in range(cols_count)] for x in range(rows_count)])
         self.counter = 0
         self.moves = []
         self.game_mode = game_mode
@@ -25,19 +25,22 @@ class Game:
             # player 1 always starts
             # player 1
             if self.counter & 1:
-                chosen_column = self.p1.make_move(self.board, self.counter)
+                chosen_column = self.p1.find_move(self.board, self.counter)
             # player 2
             else:
-                chosen_column = self.p2.make_move(self.board, self.counter)
+                chosen_column = self.p2.find_move(self.board, self.counter)
+
+            print(f"{self.get_current_player()} chose column: {chosen_column}")
 
             self.moves.append(chosen_column)
 
             if not self.is_legal_move(chosen_column):
-                print(f"The winner is {self.get_player(self.counter ^ 1)}. {self.get_current_player()} made an "
+                print(f"The winner is {self.get_player(~(self.counter & 1))}. {self.get_current_player()} made an "
                       f"illegal move.")
                 return
 
             self.insert_move(chosen_column)
+            self.print_board(self.board)
 
             if self.is_win():
                 print(f"{self.get_current_player()} is the winner.")
@@ -91,6 +94,7 @@ class Game:
         for x in range(5, -1, -1):
             if self.board[x][column] == 0:
                 self.board[x][column] = self.get_current_stone()
+                return
 
     def get_current_player(self):
         return ["Player 1", "Player 2"][self.counter & 1]
@@ -100,3 +104,19 @@ class Game:
 
     def get_current_stone(self):
         return [1, 2][self.counter & 1]
+
+    def print_board(self, board):
+        print("  0 1 2 3 4 5 6")
+        print(" ┏━┳━┳━┳━┳━┳━┳━┓")
+        for row in range(len(board)):
+            print(f"{row}┃", end="")
+            for col in range(len(board[0])):
+                stone = board[row][col]
+                if stone == 0:
+                    print(" ┃", end="")
+                else:
+                    print(f"{stone}┃", end="")
+            print("")
+            if row != len(board) - 1:
+                print(" ┣━╋━╋━╋━╋━╋━╋━┫")
+        print(" ┗━┻━┻━┻━┻━┻━┻━┛")

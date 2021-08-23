@@ -1,5 +1,5 @@
 import numpy as np
-import AI
+from AI import AI
 from Bitboard import *
 
 
@@ -14,7 +14,7 @@ class MinMaxAI(AI):
         self.chosen_move = -1
 
     def find_move(self, board, counter):
-        bitboards = np.array([0, 0])
+        bitboards = np.array([0, 0], dtype=np.int64)
         bitboards[0], bitboards[1], height = process_board(board)
         self.min_max(bitboards, height, 0, -np.inf, np.inf, counter & 1)
         return self.chosen_move
@@ -31,7 +31,7 @@ class MinMaxAI(AI):
             value = -np.inf
             possible_moves = list_ordered_moves(height)
             for col in possible_moves:
-                bb_copy = np.array([bitboards[0], bitboards[1]])
+                bb_copy = np.array([bitboards[0], bitboards[1]], dtype=np.int64)
                 h_copy = np.array([height[0], height[1], height[2], height[3], height[4], height[5], height[6]])
 
                 # do the move

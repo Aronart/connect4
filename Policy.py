@@ -7,6 +7,6 @@ class Policy:
         self.context = context
 
     def configure(self):
-        if self.context.gameMode == GameMode.MINMAX:
+        if self.context.game_mode == GameMode.MINMAX:
             self.context.p1 = MinMaxAI()
             self.context.p2 = MinMaxAI()
