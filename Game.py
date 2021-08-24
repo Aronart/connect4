@@ -20,6 +20,7 @@ class Game:
         if self.p1 is None or self.p2 is None:
             print("Player(s) not initialized.")
             return
+        print(f"Game mode: {self.game_mode}")
         while True:
             print(f"Turn {self.counter}:")
             # player 1 always starts
@@ -105,13 +106,15 @@ class Game:
     def get_current_stone(self):
         return [1, 2][self.counter & 1]
 
+    # x is player1 and o is player2
     def print_board(self, board):
         print("  0 1 2 3 4 5 6")
         print(" ┏━┳━┳━┳━┳━┳━┳━┓")
         for row in range(len(board)):
             print(f"{row}┃", end="")
             for col in range(len(board[0])):
-                stone = board[row][col]
+                # stone = board[row][col]
+                stone = [" ", "x", "o"][board[row][col]]
                 if stone == 0:
                     print(" ┃", end="")
                 else:

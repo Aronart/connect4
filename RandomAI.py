@@ -1,6 +1,6 @@
 import numpy as np
 from random import random
-import AI
+from AI import AI
 from Bitboard import *
 
 
